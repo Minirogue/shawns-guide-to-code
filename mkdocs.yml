@@ -1,0 +1,53 @@
+site_name: Shawn's Guide to Code
+
+# TODO
+# site_url: https://squidfunk.github.io/mkdocs-material/creating-your-site/
+# set up as blog? https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/
+# perhaps I can do an RSS feed at least and show a list of recently added/modified pages? https://guts.github.io/mkdocs-rss-plugin/
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - footnotes
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascript/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+theme:
+  name: material
+  favicon: img/shawnicon.ico
+  palette:
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to pastel
+    # Custom
+    - media: "(prefers-color-scheme: pastel)"
+      scheme: pastel
+      toggle:
+        icon: material/looks
+        name: Switch to system preference
+extra_css:
+  - css/rainbow_in_the_dark.css
