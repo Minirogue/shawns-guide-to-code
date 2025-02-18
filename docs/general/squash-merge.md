@@ -102,6 +102,44 @@ It is likely worth keeping the history of the pull requests into the feature bra
 Every pull request that is made _into_ the feature branch should be squashed, though.
 The goal here is to reduce the noise from the working branches.
 
+## Rebasing
+For completeness, I should also mention rebasing, as remote tracking tools will have a "rebase and merge" option as well.
+If we use that option to merge `APP-315` into `main`, then it will run a command along the lines of `git checkout APP-315 && git rebase main && git checkout main && git merge APP-315`.
+As we can see, this performs a normal git merge, but first "rebases" the working branch.
+All `git rebase branch-name` does is move the base commit of your working branch to the end of the given branch, so doing a rebase merge will keep your entire branch history but will prevent interleaving your branch's commits with commits already in `main`.
+Doing a rebase commit with the example above will result in the following commit history:
+
+```mermaid
+gitGraph
+    commit id:"APP-321"
+    commit id:"APP-325"
+    commit id:"APP-365"
+    commit id:"fix main"
+    branch APP-315
+    commit id:"APP-315: add doSomething()"
+    commit id:"WIP"
+    commit id:"add tests for doSomething()"
+    commit id:"fix doSomething() tests"
+    checkout main
+    merge APP-315
+```
+
+The output of `git log --oneline`:
+```
+c58b907 (HEAD -> main, APP-315) fix doSomething() tests
+1de0234 add tests for doSomething()
+20cf7f2 wip
+2f0fde5 APP-315: add doSomething()
+f99f769 fix main
+1667cd0 APP-365: add bar
+c3b49a2 APP-325
+3273b5d APP-321
+```
+
+As we can see, this is still a cleaner history than a regular in-place merge.
+Squashed merges still give us a cleaner history overall, though.
+I believe the optimal merge strategy is to always squash+merge except for feature branches, which should be rebased and merged (but should consist of squashed commits from PRs into the feature branch).
+
 ## Squashed merges and your remote tracking system
 
 Most remote trackers (GitHub, GitLab, BitBucket, etc.) have built-in support for doing squashed merges.
