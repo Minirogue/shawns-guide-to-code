@@ -1,2 +1,6 @@
+# standard fare
 .idea
+.DS_Store
+
+# mkdocs build output
 site
