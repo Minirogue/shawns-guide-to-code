@@ -11,6 +11,9 @@ plugins:
   - search
   - mermaid2
 
+hooks:
+  - hooks/add-git-history.py
+
 markdown_extensions:
   - footnotes
   - pymdownx.arithmatex:
