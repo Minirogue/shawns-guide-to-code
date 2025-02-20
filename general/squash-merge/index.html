@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Shawn Witte" name="author"/>
+<link href="https://minirogue.github.io/shawns-guide-to-code/general/squash-merge/" rel="canonical"/>
+<link href="../../version-history/" rel="prev"/>
+<link href="../../kotlin/idiomatic-kotlin/" rel="next"/>
+<link href="../../img/shawnicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.5" name="generator"/>
+<title>Using the Squash Merge Strategy - Shawn's Guide to Code</title>
+<link href="../../assets/stylesheets/main.8608ea7d.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../css/rainbow_in_the_dark.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="indigo" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#using-the-squash-merge-strategy">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Shawn's Guide to Code" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Shawn's Guide to Code">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Shawn's Guide to Code
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Using the Squash Merge Strategy
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="(prefers-color-scheme)" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"></path></svg>
+</label>
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="teal" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_2" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to pastel" class="md-option" data-md-color-accent="deep-purple" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="teal" data-md-color-scheme="slate" id="__palette_2" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_3" hidden="" title="Switch to pastel">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to system preference" class="md-option" data-md-color-accent="indigo" data-md-color-media="(prefers-color-scheme: pastel)" data-md-color-primary="indigo" data-md-color-scheme="pastel" id="__palette_3" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to system preference">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 6A11 11 0 0 0 1 17h2c0-4.96 4.04-9 9-9s9 4.04 9 9h2A11 11 0 0 0 12 6m0 4c-3.86 0-7 3.14-7 7h2a5 5 0 0 1 5-5 5 5 0 0 1 5 5h2c0-3.86-3.14-7-7-7"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Minirogue/shawns-guide-to-code/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Shawn's Guide to Code" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Shawn's Guide to Code">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Shawn's Guide to Code
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Minirogue/shawns-guide-to-code/" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Shawn's Opinionated Guide to Code
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../version-history/">
+<span class="md-ellipsis">
+    Version History
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    General
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            General
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Using the Squash Merge Strategy
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Using the Squash Merge Strategy
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#assumed-prior-knowledge">
+<span class="md-ellipsis">
+      Assumed prior knowledge
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tldr">
+<span class="md-ellipsis">
+      TLDR
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-squashing-in-git">
+<span class="md-ellipsis">
+      What is squashing in git?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#merging-without-squashing">
+<span class="md-ellipsis">
+      Merging without squashing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#squash-and-merge">
+<span class="md-ellipsis">
+      Squash and Merge
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#should-we-squash-every-merge">
+<span class="md-ellipsis">
+      Should we squash every merge?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rebasing">
+<span class="md-ellipsis">
+      Rebasing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#squashed-merges-and-your-remote-tracking-system">
+<span class="md-ellipsis">
+      Squashed merges and your remote tracking system
+    </span>
+</a>
+<nav aria-label="Squashed merges and your remote tracking system" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#github">
+<span class="md-ellipsis">
+      GitHub
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#page-history">
+<span class="md-ellipsis">
+      Page History
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Kotlin
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Kotlin
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../kotlin/idiomatic-kotlin/">
+<span class="md-ellipsis">
+    Idiomatic Kotlin
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#assumed-prior-knowledge">
+<span class="md-ellipsis">
+      Assumed prior knowledge
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tldr">
+<span class="md-ellipsis">
+      TLDR
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-is-squashing-in-git">
+<span class="md-ellipsis">
+      What is squashing in git?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#merging-without-squashing">
+<span class="md-ellipsis">
+      Merging without squashing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#squash-and-merge">
+<span class="md-ellipsis">
+      Squash and Merge
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#should-we-squash-every-merge">
+<span class="md-ellipsis">
+      Should we squash every merge?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rebasing">
+<span class="md-ellipsis">
+      Rebasing
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#squashed-merges-and-your-remote-tracking-system">
+<span class="md-ellipsis">
+      Squashed merges and your remote tracking system
+    </span>
+</a>
+<nav aria-label="Squashed merges and your remote tracking system" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#github">
+<span class="md-ellipsis">
+      GitHub
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#page-history">
+<span class="md-ellipsis">
+      Page History
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="using-the-squash-merge-strategy">Using the Squash Merge Strategy</h1>
+<h2 id="assumed-prior-knowledge">Assumed prior knowledge</h2>
+<p>To understand this page, it is assumed that you have a basic understanding of git branching and merging.</p>
+<h2 id="tldr">TLDR</h2>
+<ul>
+<li>Use the "squash and merge" option in your chosen remote version control solution as best practice when merging individual PRs.</li>
+<li>If your remote version control solution allows, restrict merges so this is the only option.</li>
+<li>If you're on the command line, the equivalent command is <code>git checkout target-branch &amp;&amp; git merge working-branch --squash &amp;&amp; git commit</code> to squash and merge <code>working-branch</code> into <code>target-branch</code></li>
+</ul>
+<h2 id="what-is-squashing-in-git">What is squashing in git?</h2>
+<p>In git, "squashing" a set of commits refers to the process turning those commits into a single equivalent commit.
+There is no <code>git squash</code> command, but rather an option to <code>--squash</code> when performing certain other actions in git.
+One <em>could</em> manually squash commits by using a soft reset or an interactive rebase, but we're not going to get into that today.
+The main focus is here is going to be using the squash merge strategy.</p>
+<h2 id="merging-without-squashing">Merging without squashing</h2>
+<p>Consider the following git commit graph where we create a branch named <code>APP-315</code>, make some commits, merge <code>main</code>, make another commit, then use a regular merge (<code>git merge APP-315</code>) to merge the branch back into <code>main</code>:</p>
+<div class="mermaid">gitGraph
+    commit id:"APP-321"
+    commit id:"APP-325"
+    branch APP-315
+    commit id:"APP-315: add doSomething()"
+    commit id:"WIP"
+    commit id:"add tests for doSomething()"
+    checkout main
+    commit id:"APP-365"
+    checkout APP-315
+    merge main id:"merge main"
+    commit id:"fix doSomething() tests"
+    checkout main
+    commit id:"fix main"
+    merge APP-315 id:"merge APP-315"
+</div>
+<p>We see that at the point where the branch <code>APP-315</code> is merged back into <code>main</code>, the commit history will contain all commits from the branch.
+This includes commits like the one labeled "WIP" and the one where we merged the <code>main</code> branch back into <code>APP-315</code>.
+Here is what <code>git log --oneline</code> outputs:</p>
+<pre><code>361a520 (HEAD -&gt; main) Merge branch 'APP-315'
+f99f769 fix main
+c58b907 (APP-315) fix doSomething() tests
+ab3853f Merge branch 'main' into APP-316
+1667cd0 APP-365: add bar
+1de0234 add tests for doSomething()
+20cf7f2 wip
+2f0fde5 APP-315: add doSomething()
+c3b49a2 APP-325
+3273b5d APP-321
+</code></pre>
+<p>Suppose we wanted to try to find the commit where a regression was introduced (perhaps by <a href="https://git-scm.com/docs/git-bisect">git bisect</a>).
+I might try to run a test against the commits between the last known good commit and the first known bad commit, but there's no guarantee that something like the <code>wip</code> commit will even build, let alone that it doesn't introduce some other weird breaking behavior that was fixed before the <code>APP-315</code> branch was merged.
+By merging this one branch, we have started to create a mess of our commit history.
+By merging everyone's pull requests in this fashion on any sizable team, it is guaranteed that we have made a mess of our commit history.</p>
+<h2 id="squash-and-merge">Squash and Merge</h2>
+<p>Now consider merging using the squash strategy.
+The only thing that changes in our process is that rather than call <code>git checkout main &amp;&amp; git merge APP-315</code>, we call <code>git checkout main &amp;&amp; git merge APP-315 --squash &amp;&amp; git commit -m "merge branch APP-315"</code>
+Calling <code>git merge APP-315 --squash</code> (<a href="https://git-scm.com/docs/git-merge#Documentation/git-merge.txt---squash">docs</a>) takes all of the commits in the <code>APP-315</code> branch and "squashes" them into a single commit, which then gets staged at the head of your currently checked out branch.
+This leaves us with the following git graph</p>
+<div class="mermaid">gitGraph
+    commit id:"APP-321"
+    commit id:"APP-325"
+    branch APP-315
+    commit id:"APP-315: add doSomething()"
+    commit id:"WIP"
+    commit id:"add tests for doSomething()"
+    checkout main
+    commit id:"APP-365"
+    checkout APP-315
+    merge main id:"merge main"
+    commit id:"fix doSomething() tests"
+    checkout main
+    commit id:"fix main"
+    commit id:"merge branch APP-315"
+</div>
+<p>That last commit in the <code>main</code> branch represents all of the work that was done in the <code>APP-315</code> branch, but does not introduce the entire history of that branch into <code>main</code>.
+The <code>APP-315</code> branch and its commits do all still exist, though, if we should need that history for some reason.
+We now get a <code>git log --oneline</code> from the <code>main</code> branch that looks like this:</p>
+<pre><code>e5ace53 (HEAD -&gt; main) merge branch APP-315
+f99f769 fix main
+1667cd0 APP-365: add bar
+c3b49a2 APP-325
+3273b5d APP-321
+</code></pre>
+<p>So now the git history has a single commit that represents merging branch <code>APP-315</code>.</p>
+<p>Now suppose we want to find where a regression was introduced.
+If every pull request into main is merged using the squash strategy, then we should expect to be able to build and test every<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> commit to find the source of the regression.
+Additionally, we are guaranteed that every commit in our history is a full unit of work with a meaningful change attached to it (no more "wip" or "merge main" commits). </p>
+<h2 id="should-we-squash-every-merge">Should we squash every merge?</h2>
+<p>If you have a development pattern where every pull request into the main branch is a singular unit of work, then I'd say "yes".
+However, if you use feature branches that you target with pull requests until the feature is ready and then merge that branch into the main branch, then the answer changes to a "maybe".
+It is likely worth keeping the history of the pull requests into the feature branch when you merge it into your main branch, so the final pull request that merges the feature branch into the main branch perhaps shouldn't be squashed.
+Every pull request that is made <em>into</em> the feature branch should be squashed, though.
+The goal here is to reduce the noise from the working branches.</p>
+<h2 id="rebasing">Rebasing</h2>
+<p>For completeness, I should also mention rebasing, as remote tracking tools will have a "rebase and merge" option as well.
+If we use that option to merge <code>APP-315</code> into <code>main</code>, then it will run a command along the lines of <code>git checkout APP-315 &amp;&amp; git rebase main &amp;&amp; git checkout main &amp;&amp; git merge APP-315</code>.
+As we can see, this performs a normal git merge, but first "rebases" the working branch.
+All <code>git rebase branch-name</code> does is move the base commit of your working branch to the end of the given branch, so doing a rebase merge will keep your entire branch history but will prevent interleaving your branch's commits with commits already in <code>main</code>.
+Doing a rebase commit with the example above will result in the following commit history:</p>
+<div class="mermaid">gitGraph
+    commit id:"APP-321"
+    commit id:"APP-325"
+    commit id:"APP-365"
+    commit id:"fix main"
+    branch APP-315
+    commit id:"APP-315: add doSomething()"
+    commit id:"WIP"
+    commit id:"add tests for doSomething()"
+    commit id:"fix doSomething() tests"
+    checkout main
+    merge APP-315
+</div>
+<p>The output of <code>git log --oneline</code>:</p>
+<pre><code>c58b907 (HEAD -&gt; main, APP-315) fix doSomething() tests
+1de0234 add tests for doSomething()
+20cf7f2 wip
+2f0fde5 APP-315: add doSomething()
+f99f769 fix main
+1667cd0 APP-365: add bar
+c3b49a2 APP-325
+3273b5d APP-321
+</code></pre>
+<p>As we can see, this is still a cleaner history than a regular in-place merge.
+Squashed merges still give us a cleaner history overall, though.
+I believe the optimal merge strategy is to always squash+merge except for feature branches, which should be rebased and merged (but should consist of squashed commits from PRs into the feature branch).</p>
+<h2 id="squashed-merges-and-your-remote-tracking-system">Squashed merges and your remote tracking system</h2>
+<p>Most remote trackers (GitHub, GitLab, BitBucket, etc.) have built-in support for doing squashed merges.</p>
+<h3 id="github">GitHub</h3>
+<p>On GitHub, you can set repository settings to allow/disallow regular merges, squashed merges, and rebased merges.
+These settings can be found under the "General" area of the "Settings" tab on your repo (as an administrator):
+<img alt="GitHub Pull Requests merge settings" src="../img/github-pr-merge-settings.jpg"/></p>
+<p>As long as squash merges are allowed, you can select it as your merge strategy when merging a pull request.
+Simply click the arrow next to the merge button and you will be given a chance to select your merge strategy from those allowed by the repository settings:
+<img alt="GitHub Pull Request merge strategy selection" src="../img/github-pr-merge-strategy.jpg"/></p>
+<h2 id="page-history">Page History</h2>
+<ul>
+<li>2025-02-19 <a href="https://github.com/Minirogue/shawns-guide-to-code/commit/ec9e3ab">ec9e3ab</a> Add hook to add git history to each page (<a href="https://github.com/Minirogue/shawns-guide-to-code/pull/3">#3</a>)</li>
+</ul>
+<div class="footnote">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>In reality, we should only need to check <span class="arithmatex">\(log_2(N)\)</span> commits, where <span class="arithmatex">\(N\)</span> is the number of commits, if you're doing a binary search as with <code>git bisect</code>. <a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+</ol>
+</div>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+<script src="../../javascript/mathjax.js"></script>
+<script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>
