@@ -8,7 +8,7 @@ from mkdocs.structure.files import Files
 from mkdocs.structure.pages import Page
 from typing_extensions import Match
 
-exceptions = []  # ["index", "version-history"]
+exceptions = ["index", "version-history"]
 
 
 def on_page_markdown(
