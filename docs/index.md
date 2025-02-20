@@ -1,7 +1,6 @@
 # Shawn's Opinionated Guide to Code
 
-
-This the site where I  document my opinionated approach to coding best practices, mostly focused on Android and Kotlin.
+This is the site where I document my opinionated approach to coding best practices, mostly focused on Android and Kotlin.
 It's currently a work-in-progress.
 You can find the source for this site in [here](https://github.com/Minirogue/shawns-guide-to-code) or by clicking on "GitHub" in the upper corner of any page on this site.
 

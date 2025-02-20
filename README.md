@@ -1,13 +1,12 @@
-# Shawn's Guide to Code
+# Shawn's Opinionated Guide to Code
 
-This is the repository where I document my opinionated approach to coding best practices.
-There is a focus on Android and Kotlin, but many things can be applied more generally.
+This is the repository where I document my opinionated approach to coding best practices with a focus on Android and Kotlin.
 
 ## The Site
 This documentation is published as a GitHub Pages site that can be found here: https://minirogue.github.io/shawns-guide-to-code.
 
 ## Upcoming Topics to Cover
-
+Just a TODO list for future pages.
 - State management for MVVM/MVI/UDF.
     - I will cover 3 main approaches to representing the state (monolith `data class`, mutually exclusive`sealed inteface` subclasses, microstates).
     - [Article with reference tweet](https://gpeal.medium.com/modeling-android-screens-as-state-97aa5511657d).
