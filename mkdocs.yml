@@ -1,4 +1,4 @@
-site_name: Shawn's Guide to Code
+site_name: Shawn's Opinionated Guide to Code
 site_author: Shawn Witte
 site_url: https://minirogue.github.io/shawns-guide-to-code
 repo_url: https://github.com/Minirogue/shawns-guide-to-code/
@@ -16,8 +16,22 @@ hooks:
 
 markdown_extensions:
   - footnotes
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.details
+  - attr_list
 
 extra_javascript:
   - javascript/mathjax.js

@@ -1,4 +1,6 @@
-# Shawn's Opinionated Guide to Code
+# About
+
+## About This Site
 
 This is the site where I document my opinionated approach to coding best practices, mostly focused on Android and Kotlin.
 It's currently a work-in-progress.
@@ -6,6 +8,7 @@ You can find the source for this site in [here](https://github.com/Minirogue/sha
 
 ## About Me
 
-My name is Shawn Witte, and I have thoughts.
-I am a professional Android Software Engineer.
-My personal page can be found here: [https://minirogue.github.io].
+![Image title](img/self.jpg){ align=right width="300" }
+My name is Shawn Witte (or just "Rainbow" to those who forget my name), and I have thoughts.
+I am a professional Android Software Engineer, currently working for <a href="https://www.insulet.com/">Insulet</a>.
+My personal page can be found here: [https://minirogue.github.io](https://minirogue.github.io).
