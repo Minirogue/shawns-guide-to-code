@@ -13,3 +13,8 @@ If you have any feedback or comments for anything on this site, feel free to use
 My name is Shawn Witte (or just "Rainbow" to those who forget my name), and I have thoughts.
 I am a professional Android Software Engineer, currently working for [Insulet](https://www.insulet.com).
 If you'd like to know more about me and my background, you can find my personal page here: [https://minirogue.github.io](https://minirogue.github.io).
+
+
+## Tag Index
+
+<!-- material/tags -->

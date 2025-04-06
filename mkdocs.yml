@@ -8,6 +8,11 @@ plugins:
   - search
   - mermaid2
   - rss
+  - tags:
+      tags: false
+      tags_allowed:
+        - Kotlin
+        - Code Style
 
 hooks:
   - hooks/add-git-history.py
