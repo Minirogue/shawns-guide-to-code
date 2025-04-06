@@ -1,18 +1,17 @@
 site_name: Shawn's Opinionated Guide to Code
 site_author: Shawn Witte
 site_url: https://minirogue.github.io/shawns-guide-to-code
+site_description: Articles detailing the coding opinions of Shawn Witte.
 repo_url: https://github.com/Minirogue/shawns-guide-to-code/
-
-# TODO
-# set up as blog? https://squidfunk.github.io/mkdocs-material/setup/setting-up-a-blog/
-# perhaps I can do an RSS feed at least and show a list of recently added/modified pages? https://guts.github.io/mkdocs-rss-plugin/
 
 plugins:
   - search
   - mermaid2
+  - rss
 
 hooks:
   - hooks/add-git-history.py
+  - hooks/add-watched-files.py
 
 markdown_extensions:
   - footnotes
@@ -40,6 +39,8 @@ extra_javascript:
 theme:
   name: material
   favicon: img/shawnicon.ico
+  logo: img/shawnicon.ico
+  custom_dir: overrides
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"

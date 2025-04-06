@@ -10,7 +10,6 @@ from typing_extensions import Match
 
 exceptions = ["index", "version-history"]
 
-
 def on_page_markdown(
         markdown: str, page: Page, config: MkDocsConfig, files: Files
 ) -> Union[str, None]:

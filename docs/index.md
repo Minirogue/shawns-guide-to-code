@@ -10,5 +10,5 @@ You can find the source for this site in [here](https://github.com/Minirogue/sha
 
 ![Image title](img/self.jpg){ align=right width="300" }
 My name is Shawn Witte (or just "Rainbow" to those who forget my name), and I have thoughts.
-I am a professional Android Software Engineer, currently working for <a href="https://www.insulet.com/">Insulet</a>.
+I am a professional Android Software Engineer, currently working for [Insulet](https://www.insulet.com).
 My personal page can be found here: [https://minirogue.github.io](https://minirogue.github.io).
