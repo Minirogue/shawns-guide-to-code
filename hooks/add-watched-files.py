@@ -1,4 +1,3 @@
-import os
 from typing import Callable
 
 from mkdocs.config.defaults import MkDocsConfig
