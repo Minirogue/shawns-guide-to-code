@@ -2,7 +2,7 @@
 tags:
   - Architecture
 ---
-# Dependency Graph
+# Dependency Graphs
 When architecting an application, it can be helpful to consider your dependency graph.
 This page outlines the general concepts of dependency graphs with the intent of defining terms, concepts, and properties that can be used to better reason about your dependency graph.
 If you manage your dependency graph carefully, you can ensure a cleaner codebase as well as take advantage of build time optimizations like parallel module builds, compile avoidance, etc.
@@ -63,21 +63,21 @@ To explore what it would mean to allow cycles in our dependency graph, let's fir
 A 1-cycle would just mean that a module is dependent on itself.
 We could argue that the module already inherently dependent on itself in a way (the module must "know" about its own code).
 However, if we tried to explicitly declare a dependency on itself, then by our assumptions, we need it to compile before it can compile, which is clearly nonsense.
-<center>
+<figure>
 ```mermaid
 graph LR
 	A --> A
 ```
-</center>
+</figure>
 
 Expanding to a more sensical case, consider two modules, `A` and `B` which both depend on each other:
-<center>
+<figure>
 ```mermaid
 graph LR
 	A --> B
 	B --> A
 ```
-</center>
+</figure>
 Suppose you attempt to compile module `A`.
 Since module `A` depends on module `B`, we need to compile module `B` first.
 But now we see that `B` depends on `A`, so to compile `B` we need to first compile `A`.
@@ -87,7 +87,7 @@ Hence, we cannot allow a 2-cycle in our dependency graph to have a validly compi
 
 For any cycle larger than 2, consider the same argument and you will eventually see the same issue as we loop back to the first module you tried to build.
 So, we can apply inductive reasoning to say that no cycle of any size can be allowed in our dependency graph in order to allow it to compile with the assumptions made at the start of this page.
-<center>
+<figure>
 ```mermaid
 graph LR
 	A --> B
@@ -99,7 +99,7 @@ graph LR
 	G --> H
 	H --> D
 ```
-</center>
+</figure>
 
 ## Useful properties of Directed Acyclic Graphs (DAGs)
 
