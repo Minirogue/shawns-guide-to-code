@@ -6,7 +6,8 @@ repo_url: https://github.com/Minirogue/shawns-guide-to-code/
 
 plugins:
   - search
-  - mermaid2
+  - mermaid2:
+      javascript: https://unpkg.com/mermaid@11.6.0/dist/mermaid.esm.min.mjs
   - rss
   - tags:
       tags: false

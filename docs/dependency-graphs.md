@@ -118,17 +118,18 @@ The **length** of a walk/path is the number of edges in that walk/path
 ```mermaid
 graph TB
 	App[Application Module] --> A[Feature A]
-	App --> B[Feature B]
+	App e1@==> B[Feature B]
 	A --> C[Library C]
 	A --> D[Library D]
-	B --> D
+	B e2@==> D
 	B --> Util[Library E]
 	C --> Util
 	D --> Util
-	style App fill:#f9f,stroke:#333,stroke-width:4px
-	style B fill:#f9f,stroke:#333,stroke-width:4px
-	style D fill:#f9f,stroke:#333,stroke-width:4px
-	linkStyle 1,4 stroke:#f9f,stroke-width:6px;
+	style App stroke:#333,stroke-width:4px
+	style B stroke:#333,stroke-width:4px
+	style D stroke:#333,stroke-width:4px
+	e1@{ animate: true }
+	e2@{ animate: true }
 ```
 <figcaption>A walk/path of length 2 from Application Module to Library D.</figcaption>
 </figure>
@@ -164,17 +165,18 @@ An important feature of reachability in a dependency graph is that if $A \leq B$
 ```mermaid
 graph TB
 	App[Application Module] --> A[Feature A]
-	App --> B[Feature B]
+	App e1@==> B[Feature B]
 	A --> C[Library C]
 	A --> D[Library D]
-	B --> D
+	B e2@==> D
 	B --> Util[Library E]
 	C --> Util
 	D --> Util
-	style App fill:#f9f,stroke:#333,stroke-width:4px
-	style B fill:#f9f,stroke:#333,stroke-width:4px
-	style D fill:#f9f,stroke:#333,stroke-width:4px
-	linkStyle 1,4 stroke:#f9f,stroke-width:6px;
+	style App stroke:#333,stroke-width:4px
+	style B stroke:#333,stroke-width:4px
+	style D stroke:#333,stroke-width:4px
+	e1@{ animate: true }
+	e2@{ animate: true }
 ```
 <figcaption>There is a path from Application Module to Library D, but no path from Library C to Library D.
 So, Library D is reachable from the Application Module, but not reachable from Library C.</figcaption>
@@ -183,9 +185,25 @@ So, Library D is reachable from the Application Module, but not reachable from L
 
 The **in-degree** of a node in a directed graph is the number of edges that point directly to that node.
 In a dependency graph, the in-degree is the number of modules that directly depend on the given module.
+<figure>
+```mermaid
+graph TB
+	App[Application Module] --> A[Feature A]
+	App --> B[Feature B]
+	A --> C[Library C]
+	A e2@==> D[Library D]
+	B e1@==> D
+	B --> Util[Library E]
+	C --> Util
+	D --> Util
+	style D stroke:#333,stroke-width:4px
+    e1@{ animate: true }
+    e2@{ animate: true }
+```
+<figcaption>Library D has in-degree 2.</figcaption>
+</figure>
 The **out-degree** of a node in a directed graph is the number of edges that point away from that node.
-The out-degree is the number of modules on which the given module depends.
-
+The out-degree is the number of modules on which the given module directly depends.
 <figure>
 ```mermaid
 graph TB
@@ -196,34 +214,56 @@ graph TB
 	B --> D
 	B --> Util[Library E]
 	C --> Util
-	D --> Util
+	D e1@==> Util
+	style D stroke:#333,stroke-width:4px
+    e1@{ animate: true }
 ```
-<figcaption>The Application module has in-degree 0 and out-degree 2. 
-Library D has in-degree 2 and out-degree 1.</figcaption>
+<figcaption>Library D has out-degree 1.</figcaption>
 </figure>
 
 The **out-reach** of a node is the number of nodes that are reachable from it.
 In a dependency graph, the out-reach of a node is the number of modules that must compile before that node can compile.
+<figure>
+```mermaid
+graph TB
+	App[Application Module] --> A[Feature A]
+	App --> B[Feature B]
+	A ==> C[Library C]
+	A ==> D[Library D]
+	B --> D
+	B --> Util[Library E]
+	C ==> Util
+	D ==> Util
+	style A stroke:#333,stroke-width:4px
+	style C fill:#f9f,stroke:#333,stroke-width:4px
+	style D fill:#f9f,stroke:#333,stroke-width:4px
+	style Util fill:#f9f,stroke:#333,stroke-width:4px
+```
+<figcaption>The Feature A module has out-reach of 3.</figcaption>
+</figure>
 The **in-reach** of a node is the number of nodes from which it is reachable.
 In a dependency graph, the in-reach of a node is the number of modules that cannot compile until that node has compiled
 
 <figure>
 ```mermaid
 graph TB
-	App[Application Module] --> A[Feature A]
-	App --> B[Feature B]
+	App[Application Module] ==> A[Feature A]
+	App ==> B[Feature B]
 	A --> C[Library C]
-	A --> D[Library D]
-	B --> D
+	A ==> D[Library D]
+	B ==> D
 	B --> Util[Library E]
 	C --> Util
 	D --> Util
+	style D stroke:#333,stroke-width:4px
+	style A fill:#f9f,stroke:#333,stroke-width:4px
+	style B fill:#f9f,stroke:#333,stroke-width:4px
+	style App fill:#f9f,stroke:#333,stroke-width:4px
 ```
-<figcaption>The Application module has in-reach of 0 and out-reach of 5.
-Library D has in-reach of 3 and out-reach of 1.</figcaption>
+<figcaption>The Library D module has an in-reach of 3.</figcaption>
 </figure>
 
-Note that these last two definitions are my own, as I couldn't find any pre-existing definitions for these values[^2].
+Note that "in-reach" and "out-reach" are my own definitions, as I couldn't find any pre-existing definitions for these values[^2].
 
 
 [^1]: Please don't think too hard about the implications of infinite modules. My background is in mathematics, so including this assumption is more of an academic compulsion than anything... Although, I admit that I am now thinking about the horrible horrible implications of infinite modules.
