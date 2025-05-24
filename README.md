@@ -5,6 +5,15 @@ This is the repository where I document my opinionated approach to coding best p
 ## The Site
 This documentation is published as a GitHub Pages site that can be found here: https://minirogue.github.io/shawns-guide-to-code.
 
+## Working with this repo
+This is mostly notes for myself:
+
+- Use a python virtual environment to install the required packages.
+  - `source .venv/bin/activate` to enter the virtual environment stored in `.venv` (not checked into git).
+- Use `pip install -r requirements.txt` to install all required packages.
+- Use `pur -r requirements.txt` to automatically update `requirements.txt` to the latest versions.
+- Use `mkdocs serve` to run a local server.
+
 ## Upcoming Topics to Cover
 Just a TODO list for future pages.
 - State management for MVVM/MVI/UDF.
@@ -20,4 +29,13 @@ Just a TODO list for future pages.
     - Using MutableStateFlow for VM state
     - Using channels + `receiveAsFlow()` for one-shot events.
 - Expand on Kotlin idioms and anti-idioms
-- Trailing commas: they're good
+  - if != null vs ?.let (multiline/singleline it) vs ?.also, var vs val, etc.
+
+## Possible Site Improvements
+
+- Need to check if RSS feed is working correctly
+- Revisit page organization/navigation once there's a few more pages
+- Maybe some images would help break things up within pages?
+- Should revise RSS metadata:
+  - Image
+  - Page descriptions
