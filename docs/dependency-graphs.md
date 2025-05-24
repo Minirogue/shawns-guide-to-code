@@ -54,6 +54,8 @@ graph TB
 ```
 </figure>
 
+In this dependency graph `Application Module` depends on the modules `Feature A` and `Feature B`, `Feature B` depends on `Library D` and `Library E`, `Library E` has no dependencies, etc.
+
 ### Why is the Dependency Graph Acyclic?
 
 The directedness of our dependency graphs arises naturally from the nature of dependencies: if module `A` depends on module `B`, then `A` needs to know about details of `B`, but `B` need not know that `A` even exists.
@@ -128,7 +130,7 @@ graph TB
 	style D fill:#f9f,stroke:#333,stroke-width:4px
 	linkStyle 1,4 stroke:#f9f,stroke-width:6px;
 ```
-A walk/path of length 2 from Application Module to Library D.
+<figcaption>A walk/path of length 2 from Application Module to Library D.</figcaption>
 </figure>
 ### Height
 
@@ -149,7 +151,8 @@ graph TB
 	C --> Util
 	D --> Util
 ```
-The height of Feature B is 2. The height of the Application Module is 3. There are no nodes with height larger than 3, so the height of this dependency graph is 3.
+<figcaption>The height of Feature B is 2. The height of the Application Module is 3. 
+There are no nodes with height larger than 3, so the height of this dependency graph is 3.</figcaption>
 </figure>
 ### Reachability
 A node $B$ is **reachable** from a node $A$ if there exists a path from $A$ to $B$.
@@ -173,8 +176,8 @@ graph TB
 	style D fill:#f9f,stroke:#333,stroke-width:4px
 	linkStyle 1,4 stroke:#f9f,stroke-width:6px;
 ```
-There is a path from Application Module to Library D, but no path from Library C to Library D.
-So, Library D is reachable from the Application Module, but not reachable from Library C.
+<figcaption>There is a path from Application Module to Library D, but no path from Library C to Library D.
+So, Library D is reachable from the Application Module, but not reachable from Library C.</figcaption>
 </figure>
 ### Degree
 
@@ -195,7 +198,8 @@ graph TB
 	C --> Util
 	D --> Util
 ```
-The Application module has in-degree 0 and out-degree 2. Library D has in-degree 2 and out-degree 1. 
+<figcaption>The Application module has in-degree 0 and out-degree 2. 
+Library D has in-degree 2 and out-degree 1.</figcaption>
 </figure>
 
 The **out-reach** of a node is the number of nodes that are reachable from it.
@@ -215,7 +219,8 @@ graph TB
 	C --> Util
 	D --> Util
 ```
-The Application module has in-reach of 0 and out-reach of 5. Library D has in-reach of 3 and out-reach of 1. 
+<figcaption>The Application module has in-reach of 0 and out-reach of 5.
+Library D has in-reach of 3 and out-reach of 1.</figcaption>
 </figure>
 
 Note that these last two definitions are my own, as I couldn't find any pre-existing definitions for these values[^2].
