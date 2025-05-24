@@ -11,8 +11,10 @@ plugins:
   - tags:
       tags: false
       tags_allowed:
-        - Kotlin
+        - Architecture
         - Code Style
+        - Kotlin
+        - Unit Testing
 
 hooks:
   - hooks/add-git-history.py
@@ -35,6 +37,7 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.details
+  - pymdownx.blocks.caption
   - attr_list
 
 extra_javascript:
