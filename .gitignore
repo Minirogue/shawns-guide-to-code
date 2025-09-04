@@ -4,3 +4,7 @@
 
 # mkdocs build output
 site
+hooks/__pycache__
+
+# personal environment
+.obsidian

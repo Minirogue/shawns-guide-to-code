@@ -6,13 +6,16 @@ repo_url: https://github.com/Minirogue/shawns-guide-to-code/
 
 plugins:
   - search
-  - mermaid2
+  - mermaid2:
+      javascript: https://unpkg.com/mermaid@11.6.0/dist/mermaid.esm.min.mjs
   - rss
   - tags:
       tags: false
       tags_allowed:
-        - Kotlin
+        - Architecture
         - Code Style
+        - Kotlin
+        - Unit Testing
 
 hooks:
   - hooks/add-git-history.py
@@ -35,11 +38,16 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.details
+  - pymdownx.blocks.caption
   - attr_list
 
 extra_javascript:
   - javascript/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - css/rainbow_in_the_dark.css
+  - css/extra.css
 
 theme:
   name: material
@@ -74,5 +82,3 @@ theme:
       toggle:
         icon: material/looks
         name: Switch to system preference
-extra_css:
-  - css/rainbow_in_the_dark.css
